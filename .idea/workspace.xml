@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a54597be-e904-4845-9d53-ca1c625c2cb2" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../BirdsWatcher/.idea/BirdWatchers.iml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../BirdsWatcher/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../BirdsWatcher/.idea/workspace.xml" />
     </list>
     <ignored path="FollowersChecker.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -617,7 +617,14 @@
       <option name="project" value="LOCAL" />
       <updated>1496848463776</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fixes, adding new followers check">
+      <created>1496849511488</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1496849511488</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
