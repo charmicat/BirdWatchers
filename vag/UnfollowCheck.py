@@ -23,14 +23,15 @@ class UnfollowCheck(object):
         self.api = api
         self.CONFIG_FILE = './' + self.api.user_info['screen_name'] + '.ini'
         self.unfollowers = None
-        md5, followers = self.check_followers()
-        old_list = self.read_config(md5)
+        self.new_followers = None
+        md5, current_followers = self.check_followers()
+        old_followers_list = self.read_config(md5)
 
-        print('old=' + len(old_list).__repr__() + ' new=' + len(followers).__repr__())
-        if len(old_list) > 0:
-            self.unfollowers = self.check_unfollowers(old_list, followers)
+        print('old=' + len(old_followers_list).__repr__() + ' new=' + len(current_followers).__repr__())
+        if len(old_followers_list) > 0:
+            self.unfollowers, self.new_followers = self.check_followers_changes(old_followers_list, current_followers)
 
-        self.write_config(md5, followers)
+        self.write_config(md5, current_followers)
 
     def write_config(self, md5, ids):
         print("Writing configuration")
@@ -87,26 +88,47 @@ class UnfollowCheck(object):
 
         return _md5, followers
 
-    def check_unfollowers(self, old_list, new_list):
+    def check_followers_changes(self, old_list, new_list):
         print("Checking unfollowers")
         self.unfollowers = [str(unf) for unf in old_list if unf not in new_list]
         print(self.unfollowers)
+        self.new_followers = [str(fol) for fol in new_list if fol not in old_list]
+
+        unf_info = []
+        fol_info = []
 
         if len(self.unfollowers) > 0:
 
-            info = self.api.get_friendship_status_by_id(self.unfollowers)
-            print(info, len(info))
+            unf_info = self.api.get_friendship_status_by_id(self.unfollowers)
+            print(unf_info, len(unf_info))
 
             # Twitter returns a dict response when error, list of dicts when success
-            if len(info) > 0 and type(info) == list:
-                for d in info:
+            if len(unf_info) > 0 and type(unf_info) == list:
+                for d in unf_info:
                     print(d.get('id_str') + " " + d.get('name') + " @" + d.get('screen_name'))
 
-                return info
+                return unf_info
             else:
                 print('error getting unfollowers info')
 
         else:
             print('no unfollowers found')
 
-        return []
+        if len(self.new_followers) > 0:
+
+            fol_info = self.api.get_friendship_status_by_id(self.new_followers)
+            print(fol_info, len(fol_info))
+
+            # Twitter returns a dict response when error, list of dicts when success
+            if len(fol_info) > 0 and type(fol_info) == list:
+                for d in fol_info:
+                    print(d.get('id_str') + " " + d.get('name') + " @" + d.get('screen_name'))
+
+                return fol_info
+            else:
+                print('error getting new followers info')
+
+        else:
+            print('no new followers found')
+
+        return unf_info, fol_info

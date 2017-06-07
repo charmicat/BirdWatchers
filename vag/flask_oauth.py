@@ -45,6 +45,7 @@ def before_request():
 def index():
     tweets = None
     unfollowers = None
+    new_followers = None
 
     if g.user is not None:
         print(get_twitter_token())
@@ -52,9 +53,8 @@ def index():
 
         uc = UnfollowCheck(twitter_manager)
         unfollowers = uc.unfollowers
-        print(type(unfollowers))
-        print(unfollowers)
-    return render_template('index.html', unfollowers=unfollowers)
+        new_followers = uc.new_followers
+    return render_template('index.html', unfollowers=unfollowers, followers=new_followers)
 
 
 @app.route('/tweet', methods=['POST'])
