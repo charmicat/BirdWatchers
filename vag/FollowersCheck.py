@@ -10,7 +10,7 @@ import hashlib
 import os
 
 
-class UnfollowCheck(object):
+class FollowersCheck(object):
     '''
     classdocs
     '''
