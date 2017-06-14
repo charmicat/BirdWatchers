@@ -10,7 +10,7 @@
                 {% for u in unfollowers %}
                     <li>
                         <a href="http://twitter.com/{{ u.get('screen_name') }}">{{ u.get('screen_name') }}</a>: {{ u.get('name') }}
-                        {% if u.get('connections')['following'] %}
+                        {% if 'following' in u.get('connections') %}
                             <a href="{{ url_for('unfollow') }}?user={{ u.get('screen_name') }}">UNFOLLOW</a> {% else %}
                             <a href="{{ url_for('follow') }}?user={{ u.get('screen_name') }}">FOLLOW</a>
                             </li>
@@ -25,12 +25,12 @@
 
         <h4>New Followers</h4>
         <ul>
-            {% if new_followers %}
+            {% if followers %}
 
-                {% for u in new_followers %}
+                {% for u in followers %}
                     <li>
                         <a href="http://twitter.com/{{ u.get('screen_name') }}">{{ u.get('screen_name') }}</a>: {{ u.get('name') }}
-                        {% if u.get('connections')['following'] %}
+                        {% if 'following' in u.get('connections') %}
                             <a href="{{ url_for('unfollow') }}?user={{ u.get('screen_name') }}">UNFOLLOW</a> {% else %}
                             <a href="{{ url_for('follow') }}?user={{ u.get('screen_name') }}">FOLLOW</a>
                             </li>
@@ -38,7 +38,7 @@
                 {% endfor %}
 
             {% else %}
-                <li>No unfollowers
+                <li>No new followers
                 </li>
             {% endif %}
         </ul>
