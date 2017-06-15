@@ -1,4 +1,7 @@
-from distutils.core import setup
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
 setup(
     name='BirdsWatcher',
@@ -8,5 +11,10 @@ setup(
     license='',
     author='Luiza Utsch',
     author_email='',
-    description=''
+    description='',
+    install_requires=
+    [
+        'Flask>=0.12',
+        'Flask-OAuthlib>=0.9.3',
+    ]
 )
